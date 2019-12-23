@@ -168,6 +168,9 @@ try:
 			# Set high
 			addressLines[addressLine].on()
 		
+		# Allow the CPU to breathe
+		time.sleep(0.1)
+		
 
 except KeyboardInterrupt:
 	sys.exit(0)
