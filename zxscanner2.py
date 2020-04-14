@@ -80,7 +80,7 @@ addressLines = []
 # Set all data lines to input
 for dataLineId in dataLineIds:
 	dataLines.append(DigitalInputDevice(dataLineId, True))
-	
+
 # Set all address lines for output
 for addressLineId in addressLineIds:
 	addressLines.append(DigitalOutputDevice(addressLineId, True, True))
@@ -113,7 +113,7 @@ def buttonReleased():
 	elif timePressed <= 6:
 
 		print('Killing FUSE')
-		os.system('sudo killall fuse')
+		os.system('sudo killall fuse-sdl')
 
 	else:
 
@@ -130,16 +130,16 @@ try:
 
 	# Loop forever
 	while True:
-		
+
 		# Individually set each address line low
 		for addressLine in range(8):
-			
+
 			# Set low
 			addressLines[addressLine].off()
-			
+
 			# Scan data lines
 			for dataLine in range(5):
-				
+
 				# Get state and details for this button
 				isPressed = dataLines[dataLine].value == 1
 
@@ -159,7 +159,7 @@ try:
 
 				# If not pressed now but was pressed on last check
 				elif(not isPressed and keyTrack[addressLine][dataLine] == True):
-					
+
 					# Release the key and make a note
 					print('Releasing ' + keyPressed)
 					device.emit(keyCode, 0)
@@ -167,10 +167,10 @@ try:
 
 			# Set high
 			addressLines[addressLine].on()
-		
+
 		# Allow the CPU to breathe
 		time.sleep(0.01)
-		
+
 
 except KeyboardInterrupt:
 	sys.exit(0)
